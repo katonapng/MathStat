@@ -66,28 +66,30 @@ def Uniform():
 def UniformDensity(x):
     return 1/(b-a)
 
-def RunDistribution(distribution, probability):
+def RunDistribution(distribution, probability, sample):
     x = []
     density_x = []
-    for _ in range(sample2):
+    for _ in range(sample):
         x.append(distribution())
     x.sort()
     for element in x:
         density_x.append(probability(element))
-    plt.plot(x,density_x,'r')
-    plt.ylabel("f(X)")
-    plt.xlabel("X")
-    plt.grid()
-    sns.distplot(x)
-    plt.show()
+    #shows graphics
+    #plt.plot(x,density_x,'r')
+    #plt.ylabel("f(X)")
+    #plt.xlabel("X")
+    #plt.grid()
+    #sns.distplot(x)
+    #plt.show()
+    return x
 
 
 if __name__ == "__main__":
-    RunDistribution(Normal, NormalDensity)
-    RunDistribution(Cauchy, CauchyDensity)
-    RunDistribution(Laplace, LaplaceDensity)
-    RunDistribution(Poisson, PoissonProbability)
-    RunDistribution(Uniform, UniformDensity)
+    x = RunDistribution(Normal, NormalDensity)
+    x = RunDistribution(Cauchy, CauchyDensity)
+    x = RunDistribution(Laplace, LaplaceDensity)
+    x = RunDistribution(Poisson, PoissonProbability)
+    x = RunDistribution(Uniform, UniformDensity)
  
 
     
