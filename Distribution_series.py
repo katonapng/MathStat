@@ -10,9 +10,7 @@ STEP = 500
 a = -math.sqrt(3)
 b = math.sqrt(3)
 
-sample1 = 10
-sample2 = 50
-sample3 = 1000
+sample = 10
 
 def Normal():
     s = 0
@@ -85,11 +83,11 @@ def RunDistribution(distribution, probability, sample):
 
 
 if __name__ == "__main__":
-    x = RunDistribution(Normal, NormalDensity)
-    x = RunDistribution(Cauchy, CauchyDensity)
-    x = RunDistribution(Laplace, LaplaceDensity)
-    x = RunDistribution(Poisson, PoissonProbability)
-    x = RunDistribution(Uniform, UniformDensity)
+    x = RunDistribution(Normal, NormalDensity, sample)
+    x = RunDistribution(Cauchy, CauchyDensity, sample)
+    x = RunDistribution(Laplace, LaplaceDensity, sample)
+    x = RunDistribution(Poisson, PoissonProbability, sample)
+    x = RunDistribution(Uniform, UniformDensity, sample)
  
 
     
