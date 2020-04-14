@@ -1,16 +1,24 @@
 from scipy import stats
 import numpy as np
+import Distribution_series as DS
 import seaborn as sns
 import matplotlib.pyplot as plt
-import Distribution_series
-sample_size = 20
-coef = 2
 
-def KDE(distribution):
+
+def KDE(distribution, coef, distr, probability, sample):
+    x = []
+    density_x = []
+    for _ in range(sample):
+        x.append(distr())
+    x.sort()
+    for element in x:
+        density_x.append(probability(element))
+
     kde = stats.gaussian_kde(distribution, bw_method="silverman")
     h_n = kde.factor
     distribution = np.array(distribution)
     sns.kdeplot(distribution, bw=h_n*coef)
+    plt.plot(x,density_x,'r')
     plt.ylabel("f(x)")
     plt.xlabel("x")
     plt.grid()
@@ -18,13 +26,28 @@ def KDE(distribution):
 
 
 if __name__ == "__main__":
-    x = Distribution_series.RunDistribution(Distribution_series.Normal, Distribution_series.NormalDensity, sample_size)
-    KDE(x)
-    x = Distribution_series.RunDistribution(Distribution_series.Cauchy, Distribution_series.CauchyDensity, sample_size) 
-    KDE(x)
-    x = Distribution_series.RunDistribution(Distribution_series.Laplace, Distribution_series.LaplaceDensity, sample_size)
-    KDE(x)
-    x = Distribution_series.RunDistribution(Distribution_series.Poisson, Distribution_series.PoissonProbability, sample_size)
-    KDE(x)
-    x = Distribution_series.RunDistribution(Distribution_series.Uniform, Distribution_series.UniformDensity, sample_size)
-    KDE(x)
+    coef = [1/2,1,2]
+    sample = 1000
+    sample_cauchy = 500
+    for sample_size in range(20,140,40):
+        
+        x = DS.RunDistribution(DS.Normal, DS.NormalDensity, sample_size)
+        KDE(x, coef[0], DS.Normal, DS.NormalDensity, sample)
+        KDE(x, coef[1], DS.Normal, DS.NormalDensity, sample)
+        KDE(x, coef[2], DS.Normal, DS.NormalDensity, sample)
+        x = DS.RunDistribution(DS.Cauchy, DS.CauchyDensity, sample_size) 
+        KDE(x, coef[0], DS.Cauchy, DS.CauchyDensity, sample)
+        KDE(x, coef[1], DS.Cauchy, DS.CauchyDensity, sample)
+        KDE(x, coef[2], DS.Cauchy, DS.CauchyDensity, sample)
+        x = DS.RunDistribution(DS.Laplace, DS.LaplaceDensity, sample_size)
+        KDE(x, coef[0], DS.Laplace, DS.LaplaceDensity, sample)
+        KDE(x, coef[1], DS.Laplace, DS.LaplaceDensity, sample)
+        KDE(x, coef[2], DS.Laplace, DS.LaplaceDensity, sample)
+        x = DS.RunDistribution(DS.Poisson, DS.PoissonProbability, sample_size)
+        KDE(x, coef[0], DS.Poisson, DS.PoissonProbability, sample)
+        KDE(x, coef[1], DS.Poisson, DS.PoissonProbability, sample)
+        KDE(x, coef[2], DS.Poisson, DS.PoissonProbability, sample)
+        x = DS.RunDistribution(DS.Uniform, DS.UniformDensity, sample_size)
+        KDE(x, coef[0], DS.Uniform, DS.UniformDensity, sample)
+        KDE(x, coef[1], DS.Uniform, DS.UniformDensity, sample)
+        KDE(x, coef[2], DS.Uniform, DS.UniformDensity, sample)
